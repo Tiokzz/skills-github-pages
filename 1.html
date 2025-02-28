@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>情人节惊喜 ❤️</title>
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff7eb3, #ff758c);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: '微软雅黑', cursive;
+            overflow: hidden;
+        }
+
+        /* 魔法按钮样式 */
+        .magic-btn {
+            padding: 20px 40px;
+            font-size: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 3px solid #fff;
+            border-radius: 50px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 20px rgba(255, 118, 140, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .magic-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.4),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .magic-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px rgba(255, 118, 140, 0.8);
+        }
+
+        .magic-btn:hover::before {
+            left: 100%;
+        }
+
+        /* 惊喜容器 */
+        .surprise-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 800px;
+            perspective: 1000px;
+        }
+
+        /* 卡片翻转动画 */
+        .surprise-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+            animation: cardEntrance 1s ease-out forwards;
+        }
+
+        @keyframes cardEntrance {
+            0% {
+                opacity: 0;
+                transform: rotateY(180deg) translateY(100px);
+            }
+            100% {
+                opacity: 1;
+                transform: rotateY(0) translateY(0);
+            }
+        }
+
+        /* 照片墙布局 */
+        .photo-wall {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .photo-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover {
+            transform: scale(1.05) rotate(3deg);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 跳动爱心 */
+        .heart {
+            position: absolute;
+            color: #ff3860;
+            font-size: 2rem;
+            animation: heartFloat 3s linear infinite;
+        }
+
+        @keyframes heartFloat {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* 文字特效 */
+        .love-text {
+            font-size: 2.5rem;
+            text-align: center;
+            background: linear-gradient(45deg, #ff3860, #ff7eb3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+            50% {
+                filter: drop-shadow(0 0 10px #ff3860);
+            }
+        }
+
+        /* 背景装饰 */
+        .deco-heart {
+            position: fixed;
+            opacity: 0.2;
+            pointer-events: none;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            50% {
+                transform: scale(1.2);
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="magic-btn">点击开启惊喜 ❤️</button>
+
+    <div class="surprise-container">
+        <div class="surprise-card">
+            <h1 class="love-text">情人节快乐！</h1>
+            <div class="photo-wall">
+                <!-- 这里可以添加你们的照片 -->
+                <div class="photo-item"><img src="img/photo1.jpg" alt="我们的回忆"></div>
+                <div class="photo-item"><img src="img/photo2.jpg" alt="美好时光"></div>
+                <div class="photo-item"><img src="img/photo3.jpg" alt="甜蜜时刻"></div>
+            </div>
+            <p style="text-align: center; margin: 20px 0;">你是我生命中最美的邂逅 ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        const btn = document.querySelector('.magic-btn');
+        const container = document.querySelector('.surprise-container');
+        
+        // 创建随机爱心
+        function createHearts() {
+            for (let i = 0; i < 50; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(heart);
+            }
+        }
+
+        btn.addEventListener('click', () => {
+            // 按钮动画
+            btn.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                btn.style.transform = 'scale(1)';
+            }, 200);
+
+            // 显示惊喜内容
+            container.style.display = 'block';
+            createHearts();
+            
+            // 添加背景装饰
+            for (let i = 0; i < 20; i++) {
+                const deco = document.createElement('div');
+                deco.classList.add('deco-heart');
+                deco.innerHTML = '❤️';
+                deco.style.left = Math.random() * 100 + '%';
+                deco.style.top = Math.random() * 100 + '%';
+                deco.style.fontSize = Math.random() * 30 + 20 + 'px';
+                document.body.appendChild(deco);
+            }
+        });
+    </script>
+</body>
+</html>
